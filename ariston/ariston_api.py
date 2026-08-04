@@ -777,6 +777,15 @@ class AristonAPI:
             },
         )
 
+    async def async_set_lydos_boost_temperature(self, gw_id: str, value: float) -> None:
+        """Async set Velis Lydos boost temperature"""
+        await self._async_post(
+            f"{self.__api_url}{ARISTON_VELIS}/{PlantData.Se.value}/{gw_id}/boostTemperature",
+            {
+                "new": value,
+            },
+        )
+
     async def async_set_nuos_temperature(
         self,
         gw_id: str,

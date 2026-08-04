@@ -37,3 +37,15 @@ class AristonLydosDevice(AristonEvoDevice):
         self.data[EvoDeviceProperties.MODE] = self.water_heater_mode[
             operation_mode
         ].value
+
+    @property
+    def boost_req_temp_value(self) -> float | None:
+        """Get water heater boost requested temperature"""
+        from .const import LydosDeviceProperties
+        return self.data.get(LydosDeviceProperties.BOOST_REQ_TEMP, None)
+
+    async def async_set_water_heater_boost_req_temp(self, temperature: float):
+        """Async set water heater boost requested temperature"""
+        from .const import LydosDeviceProperties
+        await self.api.async_set_lydos_boost_temperature(self.gw, temperature)
+        self.data[LydosDeviceProperties.BOOST_REQ_TEMP] = temperature
