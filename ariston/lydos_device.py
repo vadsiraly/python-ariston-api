@@ -7,6 +7,7 @@ import logging
 from .const import (
     EvoDeviceProperties,
     LuxPlantMode,
+    PlantData,
     WaterHeaterMode,
 )
 from .evo_device import AristonEvoDevice
@@ -21,6 +22,11 @@ class AristonLydosDevice(AristonEvoDevice):
     def water_heater_mode(self) -> type[WaterHeaterMode]:
         """Return the water heater mode class"""
         return LuxPlantMode
+
+    @property
+    def plant_data(self) -> PlantData:
+        """Final string to get plant data"""
+        return PlantData.Se
 
     def set_water_heater_operation_mode(self, operation_mode: str):
         """Set water heater operation mode"""
