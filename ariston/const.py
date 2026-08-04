@@ -450,6 +450,10 @@ class EvoDeviceProperties(EvoLydosDeviceProperties):
 class LydosDeviceProperties(EvoLydosDeviceProperties):
     """Contants for Velis Lydos device properties"""
 
+
+class LydosHybridDeviceProperties(LydosDeviceProperties):
+    """Contants for Velis Lydos Hybrid device properties"""
+
     BOOST_REQ_TEMP: Final[str] = "boostReqTemp"
 
 

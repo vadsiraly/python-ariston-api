@@ -10,7 +10,7 @@ from .const import (
     LydosPlantMode,
     PlantData,
     SeDeviceSettings,
-    LydosDeviceProperties,
+    LydosHybridDeviceProperties,
 )
 from .evo_lydos_device import AristonEvoLydosDevice
 
@@ -129,22 +129,32 @@ class AristonLydosHybridDevice(AristonEvoLydosDevice):
     def set_water_heater_operation_mode(self, operation_mode: str):
         """Set water heater operation mode"""
         self.api.set_lydos_mode(self.gw, LydosPlantMode[operation_mode])
-        self.data[LydosDeviceProperties.MODE] = LydosPlantMode[operation_mode].value
+        self.data[LydosHybridDeviceProperties.MODE] = LydosPlantMode[operation_mode].value
 
     async def async_set_water_heater_operation_mode(self, operation_mode: str):
         """Async set water heater operation mode"""
         await self.api.async_set_lydos_mode(self.gw, LydosPlantMode[operation_mode])
-        self.data[LydosDeviceProperties.MODE] = LydosPlantMode[operation_mode].value
+        self.data[LydosHybridDeviceProperties.MODE] = LydosPlantMode[operation_mode].value
 
     def set_water_heater_temperature(self, temperature: float):
         """Set water heater temperature"""
         self.api.set_lydos_temperature(self.gw, temperature)
-        self.data[LydosDeviceProperties.REQ_TEMP] = temperature
+        self.data[LydosHybridDeviceProperties.REQ_TEMP] = temperature
 
     async def async_set_water_heater_temperature(self, temperature: float):
         """Async set water heater temperature"""
         await self.api.async_set_lydos_temperature(self.gw, temperature)
-        self.data[LydosDeviceProperties.REQ_TEMP] = temperature
+        self.data[LydosHybridDeviceProperties.REQ_TEMP] = temperature
+
+    @property
+    def boost_req_temp_value(self) -> Optional[float]:
+        """Get water heater boost requested temperature"""
+        return self.data.get(LydosHybridDeviceProperties.BOOST_REQ_TEMP, None)
+
+    async def async_set_water_heater_boost_req_temp(self, temperature: float):
+        """Async set water heater boost requested temperature"""
+        await self.api.async_set_lydos_boost_temperature(self.gw, temperature)
+        self.data[LydosHybridDeviceProperties.BOOST_REQ_TEMP] = temperature
 
     def set_permanent_boost_value(self, boost: float) -> None:
         """Set permanent boost value"""
